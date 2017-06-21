@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+
+@font-face {
+    font-family: 'Poiret One', sans-serif;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, p {
+  box-sizing: border-box;
+  font-family: 'Poiret One', sans-serif;
+  font-size: $base-font-size;
+  font-weight: initial;
+  margin: 0;
+  -webkit-margin-after: initial;
+  -webkit-margin-before: initial;
+  -webkit-margin-end: initial;
+  -webkit-margin-start: initial;
+}
+
+
+
+html, body {
+    height: 100%;
+    font-size: $base-font-size;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: -0.4px;
+  line-height: 1.25rem;
+  margin-bottom: 0.625rem;
+  color: $pale_aqua;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.33333333rem;
+  margin-bottom: 0.666667rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+  line-height: 1.33333333rem;
+  margin-bottom: 0.6666667rem;
+}
+
+h4 {
+  font-size: 1rem;
+  line-height: 1.25rem;
+  margin-bottom: 0.625rem;
+}
+
+p {
+  font-size: 0.625rem;
+  line-height: 1.6rem;
+  margin-bottom: 0.8rem;
+}
