@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+	  <canvas id="snow"></canvas>
       <global-nav v-bind:active="text_animation"></global-nav>
-      <div v-if="text_animation" id="intro_animation">
-          <div id="text_panel" @click="rerun_text">
+      <div id="intro_animation">
+          <div id="text_panel">
               <span class="letter">W</span>
               <span class="letter">e</span>
               <span class="letter">l</span>
@@ -13,7 +14,6 @@
           </div>
           <div id="intro_line"></div>
       </div>
-	  <canvas id="snow"></canvas>
     <router-view></router-view>
   </div>
 </template>
@@ -30,26 +30,18 @@ export default {
 	},
 	data() {
 	  return {
-	      text_animation: true,
-		  renderer: null,
-		  stage: null
+	      text_animation: true
 	  }
 	},
 	mounted() {
-
-		console.log(document.documentElement.clientHeight);
-
-		//Create the renderer
 		let canvas = document.getElementById('snow');
-		this.renderer = pixi.autoDetectRenderer(document.documentElement.clientWidth, document.documentElement.clientHeight, {view: canvas, transparent: true, antialias: true});
-		this.stage = new pixi.Container();
-		this.renderer.resize = true;
+		let renderer = pixi.autoDetectRenderer(document.documentElement.clientWidth, document.documentElement.clientHeight, {view: canvas, transparent: true, antialias: true});
+		renderer.resize = true;
+		let stage = new pixi.Container();
 
-		setInterval(this.snow_machine(), 1000);
+		this.snow_machine(stage, renderer);
 
-		let temp_this = this;
-
-		this.canvas_loop();
+		setInterval(() => { this.snow_machine(stage, renderer) }, 10000);
 
 		anime({
 			targets: '#intro_line',
@@ -62,8 +54,8 @@ export default {
 					targets: '#intro_line',
 					width: '0',
 					left: ['50%', '0%'],
-					duration: 1000,
-					delay: 3500,
+					duration: 1200,
+					delay: 2000,
 					easing: 'easeInOutCubic',
 					complete: () => {
 						this.text_animation = false;
@@ -76,8 +68,8 @@ export default {
 			targets: '.letter',
 			translateY: ['100%', '0%'],
 			opacity: 1,
-			duration(el, i, length) {
-			  return 1500 + (Math.pow(i, 2) * 10);
+			duration(el, i) {
+			  return 1000 + (Math.pow(i, 2) * 10);
 			},
 			delay(el, i) {
 			  return 800 + (i * 100);
@@ -87,35 +79,36 @@ export default {
 		});
 	},
 	methods: {
-	  rerun_text() {
-	      this.text_animation.restart();
-	  },
-	  canvas_loop() {
-		  requestAnimationFrame(this.canvas_loop);
-		  this.renderer.render(this.stage);
-	  },
-	  snow_machine() {
-		  for (let i = 0; i < 10; i++) {
-  			let circle = new pixi.Graphics();
-  			let x = Math.floor((Math.random() * window.innerWidth) + 10);
-  			circle.beginFill('0xFCFFFD');
-  			circle.drawCircle(x, -20, 10);
-  			circle.endFill();
-  			circle.filters = [new PIXI.filters.BlurFilter(10)];
-  			this.stage.addChild(circle);
+		snow_machine(stage, renderer) {
+			let snow = [];
+			for (let i = 0; i < 10; i++) {
+				let circle = new pixi.Graphics();
+				let x = Math.floor((Math.random() * window.innerWidth) + 10);
+				circle.beginFill('0xFCFFFD');
+				circle.drawCircle(x, window.innerHeight, 2);
+				circle.endFill();
+				circle.filters = [new PIXI.filters.BlurFilter(1)];
+				stage.addChild(circle);
+				snow.push(circle);
+			}
 			anime({
-				targets: circle,
-				y: window.innerHeight + 20,
-				duration: 5000,
+				targets: snow,
+				y: -(window.innerHeight + 4),
+				duration: 10000,
 				easing: 'easeOutSine',
-				delay: () => {
-					let temp = (Math.floor((Math.random() * 10) + 1)) * 1000;
-					console.log(temp)
-					return temp;
+				delay: (el, i) => {
+					return i * 1000
+				},
+				update: () => {
+					renderer.render(stage);
+				},
+				complete: () => {
+					for (let circle of snow) {
+						circle.clear();
+					}
 				}
 			});
-  		}
-	  }
+		}
 	}
 }
 </script>
