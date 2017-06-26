@@ -2,7 +2,7 @@
   <div id="app">
 	  <canvas id="snow"></canvas>
       <global-nav v-bind:active="text_animation"></global-nav>
-      <div id="intro_animation">
+      <div id="intro_animation" v-show="landing">
           <div id="text_panel">
               <span class="letter">W</span>
               <span class="letter">e</span>
@@ -22,18 +22,63 @@
 import anime from 'animejs';
 import * as pixi from 'pixi.js';
 import GlobalNav from './components/global_nav';
+import Home from './components/home';
 
 export default {
 	name: 'app',
 	components: {
-	  GlobalNav
+	  GlobalNav,
+	  Home
 	},
 	data() {
 	  return {
-	      text_animation: true
+	      text_animation: true,
+		  landing: false
 	  }
 	},
 	mounted() {
+		console.log(this.$route.name);
+		if (this.$route.name == 'home') {
+			this.landing = false;
+			this.text_animation = false;
+		} else {
+			this.landing = true;
+			anime({
+				targets: '#intro_line',
+				left: '50%',
+				width: '100%',
+				duration: 2000,
+				easing: 'easeInOutCubic',
+				complete: () => {
+					anime({
+						targets: '#intro_line',
+						width: '0',
+						left: ['50%', '0%'],
+						duration: 1200,
+						delay: 2000,
+						easing: 'easeInOutCubic',
+						complete: () => {
+							this.text_animation = false;
+						}
+					});
+				}
+			});
+
+			anime({
+				targets: '.letter',
+				translateY: ['100%', '0%'],
+				opacity: 1,
+				duration(el, i) {
+				  return 1000 + (Math.pow(i, 2) * 10);
+				},
+				delay(el, i) {
+				  return 800 + (i * 100);
+				},
+				elasticity: 100,
+				direction: 'alternate'
+			});
+		}
+
 		let canvas = document.getElementById('snow');
 		let renderer = pixi.autoDetectRenderer(document.documentElement.clientWidth, document.documentElement.clientHeight, {view: canvas, transparent: true, antialias: true});
 		renderer.resize = true;
@@ -41,42 +86,9 @@ export default {
 
 		this.snow_machine(stage, renderer);
 
-		setInterval(() => { this.snow_machine(stage, renderer) }, 10000);
+		setInterval(() => { this.snow_machine(stage, renderer) }, 15000);
 
-		anime({
-			targets: '#intro_line',
-			left: '50%',
-			width: '100%',
-			duration: 2000,
-			easing: 'easeInOutCubic',
-			complete: () => {
-				anime({
-					targets: '#intro_line',
-					width: '0',
-					left: ['50%', '0%'],
-					duration: 1200,
-					delay: 2000,
-					easing: 'easeInOutCubic',
-					complete: () => {
-						this.text_animation = false;
-					}
-				});
-			}
-		});
 
-		anime({
-			targets: '.letter',
-			translateY: ['100%', '0%'],
-			opacity: 1,
-			duration(el, i) {
-			  return 1000 + (Math.pow(i, 2) * 10);
-			},
-			delay(el, i) {
-			  return 800 + (i * 100);
-			},
-			elasticity: 100,
-			direction: 'alternate'
-		});
 	},
 	methods: {
 		snow_machine(stage, renderer) {
@@ -117,6 +129,7 @@ export default {
     @import './assets/scss/main';
 
     #app {
+		position: relative;
         background-color: $blue;
         height: 100%;
 		background: linear-gradient(45deg, rgba(250,200,205,1) 5%,rgba(191,215,234,1) 50%,rgba(191,215,234,1) 50%,rgba(128,255,232,1) 100%);
@@ -155,7 +168,17 @@ export default {
         display: inline-block;
         margin: 0;
         line-height: 1;
-		color: white;
+		color: $white;
     }
+
+	.panel {
+		position: absolute;
+		width: 42%;
+		height: 75%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border: 4px solid $white;
+	}
 
 </style>

@@ -1,6 +1,6 @@
 <template>
   <nav :class="{ hover_ready: hover_ready }">
-	  <router-link>Home</router-link>
+	  <router-link to="home" class="nav_link">Home</router-link>
 	  <a class="nav_link">Work</a>
 	  <a class="nav_link">Contact</a>
   </nav>
