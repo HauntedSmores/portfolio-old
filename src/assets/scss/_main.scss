@@ -2,3 +2,19 @@
 @import 'normalize';
 @import 'variables';
 @import 'typography';
+
+.panel {
+	position: absolute;
+	width: 90%;
+	height: 75%;
+	max-width: 800px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 4px solid $white;
+}
+
+@media (max-width: $large-break) {
+}
+@media (max-width: $medium-break) {
+}

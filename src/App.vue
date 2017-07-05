@@ -171,14 +171,4 @@ export default {
 		color: $white;
     }
 
-	.panel {
-		position: absolute;
-		width: 42%;
-		height: 75%;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		border: 4px solid $white;
-	}
-
 </style>
