@@ -106,8 +106,8 @@ export default {
 			anime({
 				targets: snow,
 				y: -(window.innerHeight + 4),
-				duration: 10000,
-				easing: 'easeOutSine',
+				duration: 8000,
+				easing: 'linear',
 				delay: (el, i) => {
 					return i * 1000
 				},
@@ -116,7 +116,7 @@ export default {
 				},
 				complete: () => {
 					for (let circle of snow) {
-						circle.clear();
+						circle.destroy(true);
 					}
 				}
 			});

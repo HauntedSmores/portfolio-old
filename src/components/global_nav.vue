@@ -72,9 +72,9 @@ export default {
     @import '../assets/scss/variables';
 
     nav {
-		width: 25%;
+		width: 300px;
         height: 60px;
-		min-width: 250px;
+		max-width: 100%;
 		transform: translateY(-60px);
         border-bottom: 1px solid $white;
 		box-sizing: border-box;
