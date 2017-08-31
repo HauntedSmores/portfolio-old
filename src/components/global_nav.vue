@@ -1,8 +1,6 @@
 <template>
-  <nav :class="{ hover_ready: hover_ready }">
-	  <router-link to="home" class="nav_link">Home</router-link>
-	  <a class="nav_link">Work</a>
-	  <a class="nav_link">Contact</a>
+  <nav class="row" :class="[{ hover_ready: hover_ready, underline_ready: underline_ready }, nav_state]">
+	  <router-link v-for="(link, index) in this.$router.options.routes" :key="index" :to="link.path" class="nav_link">{{ link.name }}</router-link>
   </nav>
 </template>
 
@@ -14,7 +12,9 @@ export default {
 	props: ['active'],
 	data: function() {
 		return {
-			hover_ready: false
+			hover_ready: false,
+			underline_ready: false,
+			nav_state: ''
 		}
 	},
 	watch: {
@@ -24,7 +24,11 @@ export default {
 					targets: 'nav',
 					translateY: [-60, 0],
 					duration: 1000,
-					easing: 'easeInOutQuart'
+					easing: 'easeInOutQuart',
+					complete: (anim) => {
+						this.underline_ready = true;
+						anime.remove('.nav-link');
+					}
 				});
 
 				anime({
@@ -41,29 +45,13 @@ export default {
 					}
 				});
 			}
+		},
+		$route(route) {
+			this.nav_state = route.name;
 		}
 	},
 	mounted() {
-
-		// anime({
-		// 	targets: 'nav',
-		// 	translateY: [-60, 0],
-		// 	duration: 1000,
-		// 	easing: 'easeInOutQuart'
-		// });
-		//
-		// anime({
-		// 	targets: '.nav_link',
-		// 	translateY: [-60, 0],
-		// 	duration: 2000,
-		// 	elasticity: 300,
-		// 	delay: (el, i) => {
-		// 		return (i * 200) + 500;
-		// 	},
-		// 	complete: (anim) => {
-		// 		anime.remove('.nav-link');
-		// 	}
-		// });
+		this.nav_state = this.$route.name;
 	}
 }
 </script>
@@ -72,9 +60,10 @@ export default {
     @import '../assets/scss/variables';
 
     nav {
-		width: 300px;
+		position: absolute;
+		left: 0;
+		top: 0;
         height: 60px;
-		max-width: 100%;
 		transform: translateY(-60px);
         border-bottom: 1px solid $white;
 		box-sizing: border-box;
@@ -82,11 +71,38 @@ export default {
 		justify-content: space-between;
 		align-items: center;
 		padding: 0 12px;
-		overflow: hidden;
+
+		&:after {
+			content: '';
+			position: absolute;
+			bottom: -1px;
+			right: 100%;
+			width: 100%;
+			height: 1px;
+			background-color: $blue;
+			transition: right 1.25s $ease-out-cubic;
+		}
+
+		&.underline_ready.home:after {
+			right: calc(66.66% - 4px);
+		}
+
+		&.underline_ready.work:after {
+			right: calc(33.33% + 16px);
+		}
+
+		&.underline_ready.contact:after {
+			right: 0;
+		}
+
+		&.underline_ready {
+			.nav_link.router-link-active {
+				color: $blue;
+			}
+		}
 
 		&.hover_ready .nav_link {
-			transition: transform 0.5s;
-
+			transition: color 1s, transform 0.5s;
 			&:hover {
 				transform: translateY(-5px) !important;
 			}
@@ -96,6 +112,9 @@ export default {
 	.nav_link {
 		color: $white;
 		transform: translateY(-60px);
+		text-transform: capitalize;
+		margin: 0 12px;
+		transition: color 1s;
 	}
 
 </style>

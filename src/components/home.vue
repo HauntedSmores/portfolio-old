@@ -1,23 +1,38 @@
 <template>
-  <div id="home" class="panel">
-	  <div class="border_edge border_top"></div>
-	  <div class="border_edge border_right"></div>
-	  <div class="border_edge border_bottom"></div>
-	  <div class="border_edge border_left"></div>
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta justo quis tortor tempor cursus. Ut malesuada enim a viverra convallis. Duis pellentesque luctus sapien at volutpat. In nec justo a dui aliquet facilisis id sit amet lacus. Integer commodo euismod augue ac ornare. Mauris a malesuada arcu, eu imperdiet enim. Curabitur viverra consectetur quam, quis mattis diam scelerisque at. Aliquam ullamcorper efficitur congue. In vel erat sodales risus pharetra elementum.</p>
-  </div>
+	<div id="home">
+		<h1 class="heading_underline"><span class="typed_string"></span></h1>
+		<div class="panel" v-html="body_copy"></div>
+	</div>
 </template>
 
 <script>
 import anime from 'animejs';
+import Typed from 'typed.js';
+import { createClient } from 'contentful';
+import marked from 'marked';
 
 export default {
 	name: 'home',
 	data: function() {
 		return {
+			body_copy: ''
 		}
 	},
 	mounted() {
+		const client = createClient({
+			space: '3pya69lg4ary',
+			accessToken: process.env.CONTENTFUL_TOKEN
+		});
+
+		client.getEntry('2kIbgqur1iqaGCSaoywi0m').then((entry) => {
+			this.body_copy = marked(entry.fields.body_copy);
+			console.log(this.body_copy);
+		}).catch(console.error);
+
+		let typed = new Typed(".typed_string", {
+			strings: ["Hi. My name's Darren Segal.", "I like to code.", "Why wont this work tho?"],
+			typeSpeed: 50
+		});
 	}
 }
 </script>
@@ -25,39 +40,39 @@ export default {
 <style lang="scss">
     @import '../assets/scss/variables';
 
-	.border_edge {
+	#home {
 		position: absolute;
-		background-color: white;
-
-		&.border_top, &.border_bottom {
-			width: 100%;
-			height: 4px;
-		}
-
-		&.border_left, &.border_right {
-			width: 4px;
-			height: 100%;
-		}
-
-		&.border_left {
-			top: 0;
-			left: 0;
-		}
-
-		&.border_right {
-			top: 0;
-			right: 0;
-		}
-
-		&.border_top {
-			top: 0;
-			left: 0;
-		}
-
-		&.border_bottom {
-			right: 0;
-			bottom: 0;
-		}
+		width: 90%;
+		max-width: 800px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 
+	.heading_underline {
+		width: 100%;
+		height: 84px;
+
+		&:before {
+			content: '';
+			width: 0;
+			height: 1px;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			background-color: $blue;
+			animation: heading-underline-animation 2s $ease-in-out-cubic;
+			animation-fill-mode: both;
+		}
+
+		@keyframes heading-underline-animation {
+			from {
+				width: 0;
+			}
+
+			to {
+				width: 100%;
+			}
+		}
+	}
 </style>

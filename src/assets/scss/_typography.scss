@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poiret+One');
 @import url('https://fonts.googleapis.com/css?family=Sree+Krushnadevaraya');
-
-@font-face {
-    font-family: 'Poiret One', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 
 html, body, h1, h2, h3, h4, h5, h6, p {
   box-sizing: border-box;
@@ -24,44 +21,46 @@ html, body {
 }
 
 h1 {
-  font-size: 48px;
-  letter-spacing: 0;
-  line-height: 60px;
-  margin-bottom: 24px;
-  color: $pale_aqua;
-  font-family: 'Poiret One', sans-serif;
+	position: relative;
+	font-size: 48px;
+	letter-spacing: 0;
+	line-height: 84px;
+	margin-bottom: 24px;
+	color: $white;
+	font-family: $poiret;
 }
 
 h2 {
   font-size: 36px;
   line-height: 48px;
   margin-bottom: 24px;
-  font-family: 'Poiret One', sans-serif;
+  font-family: $poiret;
 }
 
 h3 {
   font-size: 1.125rem;
   line-height: 1.33333333rem;
   margin-bottom: 0.6666667rem;
-  font-family: 'Poiret One', sans-serif;
+  font-family: $poiret;
 }
 
 h4 {
   font-size: 1rem;
   line-height: 1.25rem;
   margin-bottom: 0.625rem;
-  font-family: 'Poiret One', sans-serif;
+  font-family: $poiret;
 }
 
 p {
-  font-size: 24px;
-  line-height: 32px;
-  margin-bottom: 12px;
-  font-family: 'Sree Krushnadevaraya', serif;
-  color: $blue;
+	font-family: $poiret;
+	font-size: 24px;
+	line-height: 32px;
+	margin-bottom: 12px;
+	font-family: $josefin;
+	color: $blue;
 }
 
 a {
-	font-family: 'Poiret One', sans-serif;
+	font-family: $poiret;
 	text-decoration: none;
 }

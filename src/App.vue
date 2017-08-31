@@ -4,13 +4,13 @@
       <global-nav v-bind:active="text_animation"></global-nav>
       <div id="intro_animation" v-show="landing">
           <div id="text_panel">
-              <span class="letter">W</span>
-              <span class="letter">e</span>
+              <span class="letter" v-for="letter in welcome_message">{{ letter }}</span>
+              <!-- <span class="letter">e</span>
               <span class="letter">l</span>
               <span class="letter">c</span>
               <span class="letter">o</span>
               <span class="letter">m</span>
-              <span class="letter">e</span>
+              <span class="letter">e</span> -->
           </div>
           <div id="intro_line"></div>
       </div>
@@ -33,12 +33,16 @@ export default {
 	data() {
 	  return {
 	      text_animation: true,
-		  landing: false
+		  landing: false,
+		  welcome_message: 'Welcome'
 	  }
 	},
 	mounted() {
-		console.log(this.$route.name);
-		if (this.$route.name == 'home') {
+
+		this.welcome_message = this.welcome_message.split('');
+
+		console.log(this.$route.path == '/');
+		if (this.$route.name) {
 			this.landing = false;
 			this.text_animation = false;
 		} else {
@@ -59,6 +63,7 @@ export default {
 						easing: 'easeInOutCubic',
 						complete: () => {
 							this.text_animation = false;
+							this.$router.push('home');
 						}
 					});
 				}

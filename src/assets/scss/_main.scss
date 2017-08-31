@@ -1,18 +1,65 @@
 @import 'reset';
 @import 'normalize';
 @import 'variables';
+@import 'grid';
 @import 'typography';
 
 .panel {
-	position: absolute;
-	width: 90%;
-	height: 75%;
-	max-width: 800px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	position: relative;
 	padding: 24px;
 	overflow: hidden;
+	box-sizing: border-box;
+
+	&:before, &:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	&:before {
+		border-top: 1px solid $blue;
+		border-bottom: 1px solid $blue;
+		width: 100%;
+		height: calc(100% - 2px);
+		transform: skewX(80deg);
+		animation: panel_skew_x 2s $ease-in-out-cubic 0s;
+		animation-fill-mode: both;
+	}
+
+	&:after {
+		border-left: 1px solid $blue;
+		border-right: 1px solid $blue;
+		width: calc(100% - 2px);
+		height: 100%;
+		transform: skewY(40deg);
+		animation: panel_skew_y 3s $ease-in-out-cubic 0s;
+		animation-fill-mode: both;
+	}
+
+	p:last-child {
+		margin: 0;
+	}
+}
+
+@keyframes panel_skew_x {
+	from {
+		transform: skewX(80deg);
+	}
+
+	to {
+		transform: skewX(75deg);
+	}
+}
+
+@keyframes panel_skew_y {
+	from {
+		transform: skewY(40deg);
+	}
+
+	to {
+		transform: skewY(20deg);
+	}
 }
 
 @media (max-width: $large-break) {
