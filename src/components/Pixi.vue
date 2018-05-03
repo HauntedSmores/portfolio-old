@@ -7,11 +7,11 @@ import * as PIXI from "pixi.js";
 import anime from "animejs";
 
 export default {
-  name: "HelloWorld",
+  name: "Pixi",
   data() {
     return {
       app: null,
-      colors: ["75F4F4", "90E0F3", "B8B3E9", "D999B9"]
+      colors: ["86F4B6", "90E0F3", "B8B3E9", "D999B9"]
     };
   },
   mounted() {

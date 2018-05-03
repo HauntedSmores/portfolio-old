@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Poiret+One');
-@import url('https://fonts.googleapis.com/css?family=Sree+Krushnadevaraya');
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Maven+Pro:400,700|Palanquin+Dark:500|VT323');
 
 html, body, h1, h2, h3, h4, h5, h6, p {
   box-sizing: border-box;
@@ -26,41 +24,40 @@ h1 {
 	letter-spacing: 0;
 	line-height: 84px;
 	margin-bottom: 24px;
-	color: $white;
-	font-family: $poiret;
+	color: $blue;
+	font-family: $font_1;
 }
 
 h2 {
   font-size: 36px;
   line-height: 48px;
   margin-bottom: 24px;
-  font-family: $poiret;
+  font-family: $font_1;
 }
 
 h3 {
   font-size: 1.125rem;
   line-height: 1.33333333rem;
   margin-bottom: 0.6666667rem;
-  font-family: $poiret;
+  font-family: $font_3;
 }
 
-h4 {
+h4, .h4 {
   font-size: 1rem;
   line-height: 1.25rem;
   margin-bottom: 0.625rem;
-  font-family: $poiret;
+  font-family: $font_1;
 }
 
 p {
-	font-family: $poiret;
+	font-family: $font_3;
 	font-size: 24px;
 	line-height: 32px;
 	margin-bottom: 12px;
-	font-family: $josefin;
 	color: $blue;
 }
 
 a {
-	font-family: $poiret;
+	font-family: $font_2;
 	text-decoration: none;
 }

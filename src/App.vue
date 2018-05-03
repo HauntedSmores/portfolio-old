@@ -1,16 +1,19 @@
 <template>
-  <div id="app">
-    <Canvas/>
+  <div id="app" class="flex">
+      <Links/>
+    <Pixi/>
   </div>
 </template>
 
 <script>
-import Canvas from "@/components/Canvas";
+import Pixi from "@/components/Pixi";
+import Links from "@/components/Links";
 
 export default {
   name: "App",
   components: {
-    Canvas
+    Pixi,
+    Links
   }
 };
 </script>
